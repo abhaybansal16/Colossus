@@ -72,8 +72,6 @@ Example pipeline usage:
   echo "hello world" | colossus -e --base64
 ```
 
-\</details\>
-
 ### Basic Examples
 
 **Encoding & Hashing**
