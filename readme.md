@@ -39,9 +39,6 @@ Open a new terminal session after installation for the `colossus` command to be 
 
 ### Help Menu
 
-\<details\>
-\<summary\>Click to view the full help menu\</summary\>
-
 ```text
 usage: colossus [-h] (-e | -d) [--base64] [--hex] [--url] [--rot47] [--vigenere] [--substitution] [--caesar] [--md5] [--sha1] [--sha256] [-k KEY] [text]
 
