@@ -1,8 +1,7 @@
 ````markdown
 # Colossus ⚔️
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/abhaybansal16/colossus/blob/main/LICENSE)
-![Python Version](https://img.shields.io/badge/python-3.6+-brightgreen.svg)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/abhaybansal16/colossus/blob/main/LICENSE) [![Python Version](https://img.shields.io/badge/python-3.6+-brightgreen.svg)](https://www.python.org/downloads/)
 
 A Universal Crypto Analyzer Tool for security researchers, CTF players, and developers.
 
