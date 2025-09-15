@@ -18,7 +18,20 @@ from colorama import init, Fore, Style
 # Initialize Colorama for cross-platform colored output
 init(autoreset=True)
 
-
+def print_banner():
+    """Prints the Colossus ASCII art banner."""
+    banner = r"""
+ /$$$$$$   /$$$$$$  /$$        /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$
+/$$__  $$ /$$__  $$| $$       /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$
+| $$  \__/| $$  \ $$| $$      | $$  \ $$| $$  \__/| $$  \__/| $$  | $$| $$  \__/
+| $$      | $$  | $$| $$      | $$  | $$|  $$$$$$ |  $$$$$$ | $$  | $$|  $$$$$$ 
+| $$      | $$  | $$| $$      | $$  | $$ \____  $$ \____  $$| $$  | $$ \____  $$
+| $$    $$| $$  | $$| $$      | $$  | $$ /$$  \ $$ /$$  \ $$| $$  | $$ /$$  \ $$
+|  $$$$$$/|  $$$$$$/| $$$$$$$$|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/
+ \______/  \______/ |________/ \______/  \______/  \______/  \______/  \______/ 
+    """
+    print(Fore.CYAN + Style.BRIGHT + banner)
+    print(Fore.YELLOW + Style.BRIGHT + "\n                A Universal Crypto Analyzer for Researchers\n")
 
 # --- ENCODING AND HASHING FUNCTIONS ---
 
