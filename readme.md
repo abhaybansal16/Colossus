@@ -126,6 +126,3 @@ $ colossus -d "aGVsbG8gd29ybGQ="
 
 --- CLASSICAL CIPHER ANALYSIS ---
 ```
-
-```
-```
