@@ -21,7 +21,8 @@ Colossus is a fast, all-in-one command-line utility that helps you quickly encod
 
 Clone the repository and run the installer. The script will install dependencies and move `colossus` to `/usr/local/bin`, making it available system-wide.
 
-```bash
+```
+bash
 # Clone the repository
 git clone [https://github.com/abhaybansal16/colossus.git](https://github.com/abhaybansal16/colossus.git)
 
