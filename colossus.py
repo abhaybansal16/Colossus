@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Colossus - A Universal Crypto Analyzer Tool for Security Researchers
+Colossus - A Universal Crypto Analyser Tool for Security Researchers
 """
 
 import argparse
@@ -15,20 +15,20 @@ from collections import Counter
 from urllib.parse import unquote, quote
 from colorama import init, Fore, Style
 
-# Initialize Colorama for cross-platform colored output
+# Initialise Colorama for cross-platform colored output
 init(autoreset=True)
 
 def print_banner():
     """Prints the Colossus ASCII art banner."""
     banner = r"""
- /$$$$$$   /$$$$$$  /$$        /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$
-/$$__  $$ /$$__  $$| $$       /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$
+ /$$$$$$    /$$$$$$  /$$        /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$
+/ $$__ $$  /$$__  $$| $$       /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$
 | $$  \__/| $$  \ $$| $$      | $$  \ $$| $$  \__/| $$  \__/| $$  | $$| $$  \__/
-| $$      | $$  | $$| $$      | $$  | $$|  $$$$$$ |  $$$$$$ | $$  | $$|  $$$$$$ 
+| $$      | $$  | $$| $$      | $$  | $$|  $$$$$$ |  $$$$$$ | $$  | $$|  $$$$$$
 | $$      | $$  | $$| $$      | $$  | $$ \____  $$ \____  $$| $$  | $$ \____  $$
 | $$    $$| $$  | $$| $$      | $$  | $$ /$$  \ $$ /$$  \ $$| $$  | $$ /$$  \ $$
 |  $$$$$$/|  $$$$$$/| $$$$$$$$|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/
- \______/  \______/ |________/ \______/  \______/  \______/  \______/  \______/ 
+ \______/  \______/ |________/ \______/  \______/  \______/  \______/  \______/
     """
     print(Fore.CYAN + Style.BRIGHT + banner)
     print(Fore.YELLOW + Style.BRIGHT + "\n                A Universal Crypto Analyzer for Researchers\n")
@@ -107,7 +107,7 @@ def encode_substitution(text, key):
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     if len(key) != 26 or not all(c in key.lower() for c in alphabet):
         return "[ERROR] Substitution key must be a 26-character permutation of the alphabet."
-    
+
     table = str.maketrans(alphabet + alphabet.upper(), key.lower() + key.upper())
     return text.translate(table)
 
@@ -118,20 +118,20 @@ def calculate_entropy(data_bytes):
     """Calculates the Shannon entropy of a byte string."""
     if not data_bytes:
         return 0.0
-    
+
     counts = Counter(data_bytes)
     total_length = len(data_bytes)
     entropy = 0.0
-    
+
     for count in counts.values():
         p_x = count / total_length
         entropy -= p_x * math.log2(p_x)
-        
+
     return entropy
 
 def decode_caesar_bruteforce(ciphertext):
     """
-    Brute-forces all possible Caesar cipher shifts (1-25) on the input text.
+    Brute-forces all possible Caesar cypher shifts (1-25) on the input text.
     Returns a list of tuples (shift, plaintext).
     """
     results = []
@@ -161,7 +161,7 @@ def auto_identify_and_decode(input_str):
     Identifies the encoding/hash of the input string and attempts to decode it.
     """
     print(f"{Fore.YELLOW}[*] Starting automatic analysis on: {Style.RESET_ALL}{input_str}")
-    
+
     # --- 1. Statistical Analysis ---
     entropy = calculate_entropy(input_str.encode('utf-8', errors='ignore'))
     entropy_color = Fore.GREEN if entropy < 4 else Fore.YELLOW if entropy < 6 else Fore.RED
@@ -178,7 +178,7 @@ def auto_identify_and_decode(input_str):
     # --- 2. Identification Rules Engine ---
     print(f"\n{Fore.WHITE}{Style.BRIGHT}--- ENCODING & HASH ANALYSIS ---{Style.RESET_ALL}")
     identifications = []
-    
+
     # Rule: Hexadecimal
     if re.fullmatch(r"^[a-fA-F0-9]+$", input_str) and len(input_str) % 2 == 0:
         try:
@@ -214,7 +214,7 @@ def auto_identify_and_decode(input_str):
                 identifications.append(('URL Encoded', decoded_url))
         except Exception:
             pass
-            
+
     # Rule: Hashes (by length)
     hash_lengths = {
         32: 'MD5',
@@ -224,7 +224,7 @@ def auto_identify_and_decode(input_str):
         96: 'SHA-384 / SHA3-384',
         128: 'SHA-512 / SHA3-512'
     }
-    
+
     if re.fullmatch(r"^[a-fA-F0-9]+$", input_str):
         length = len(input_str)
         if length in hash_lengths:
@@ -239,10 +239,10 @@ def auto_identify_and_decode(input_str):
         for type_name, result in identifications:
             print(f"    {Fore.GREEN} Detected as: {Style.BRIGHT}{type_name}{Style.RESET_ALL}")
             print(f"    {Fore.CYAN}      Result: {Style.BRIGHT}{result}{Style.RESET_ALL}\n")
-            
-    # --- 3. Classical Cipher Analysis ---
+
+    # --- 3. Classical Cypher Analysis ---
     print(f"\n{Fore.WHITE}{Style.BRIGHT}--- CLASSICAL CIPHER ANALYSIS ---{Style.RESET_ALL}")
-    
+
     # Rule: ROT47
     if all(33 <= ord(c) <= 126 for c in input_str):
         decoded_rot47 = encode_rot47(input_str) # ROT47 is its own inverse
@@ -253,14 +253,14 @@ def auto_identify_and_decode(input_str):
     # Rule: Caesar / ROT13
     if re.fullmatch(r"^[a-zA-Z\s,.]+$", input_str):
         print(f"{Fore.YELLOW}[*] Input is alphabetic, attempting Caesar cipher brute-force...{Style.RESET_ALL}")
-        
+
         caesar_results = decode_caesar_bruteforce(input_str)
         for shift, plaintext in caesar_results:
-            # Highlight ROT13 specifically as it's a common case
+            # Highlight ROT13 specifically, as it's a common case
             highlight = f"({Fore.MAGENTA}ROT13{Style.RESET_ALL})" if shift == 13 else ""
             print(f"    {Fore.GREEN}Shift {shift:02d}: {Fore.CYAN}{Style.BRIGHT}{plaintext} {highlight}")
-        
-        # Hint for more complex ciphers
+
+        # Hint for more complex cyphers
         if entropy > 4.0:
             print(f"\n{Fore.YELLOW}[*] Hint: The high entropy for alphabetic text could indicate a polyalphabetic cipher like Vigenère.{Style.RESET_ALL}")
 
@@ -268,59 +268,86 @@ def auto_identify_and_decode(input_str):
 def main():
     """Main function to parse arguments and run the tool."""
     print_banner()
-    
-    # Define a help text string for better formatting
-    encode_help_text = """Encode or hash the input string.
-Available options:
-Encodings:
-  base64 (b64), base64url (b64url), hex, url
+    # --- MODE SELECTION ---
+    encode_help_text = (
+        "Encode or hash the input string.\n"
+        "Available options:\n"
+        "  Encodings:\n"
+        "    base64 (b64)\n"
+        "    base64url (b64url)\n"
+        "    hex\n"
+        "    url\n"
+        "  Ciphers:\n"
+        "    rot47\n"
+        "    vigenere (requires --key)\n"
+        "    substitution (requires --key)\n"
+        "  Hashes (SHA-2):\n"
+        "    md5\n"
+        "    sha1\n"
+        "    sha224\n"
+        "    sha256\n"
+        "    sha384\n"
+        "    sha512\n"
+        "  Hashes (SHA-3):\n"
+        "    sha3-224\n"
+        "    sha3-256\n"
+        "    sha3-384\n"
+        "    sha3-512"
+    )
 
-Ciphers:
-  rot47, vigenere (requires --key), substitution (requires --key)
-
-Hashes (SHA-2):
-  md5, sha1, sha224, sha256, sha384, sha512
-
-Hashes (SHA-3):
-  sha3-224, sha3-256, sha3-384, sha3-512
-"""
+    valid_encodings = [
+        'base64', 'b64', 'base64url', 'b64url', 'hex', 'url',
+        'rot47', 'vigenere', 'substitution',
+        'md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512',
+        'sha3-224', 'sha3-256', 'sha3-384', 'sha3-512'
+    ]
 
     parser = argparse.ArgumentParser(
-        description="Colossus - A Universal Crypto Analyzer Tool.",
-        formatter_class=argparse.RawTextHelpFormatter # Preserve newlines in help text
+        description="Colossus - A Universal Crypto Analyser Tool.",
+        formatter_class=argparse.RawTextHelpFormatter
     )
-    
-    # --- Mode Selection ---
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-e', '--encode', dest='encode_type', help=encode_help_text, 
-        choices=[
-            'base64', 'b64', 'base64url', 'b64url', 'hex', 'url', 'rot47', 'vigenere', 'substitution',
-            'md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512', 
-            'sha3-224', 'sha3-256', 'sha3-384', 'sha3-512'
-        ]
-    )
-    group.add_argument('-d', '--decode', action='store_true', help='Automatically identify and decode/analyze the input string.')
 
-    # --- Input ---
-    parser.add_argument('text', help='The string to be processed.')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        '-e', '--encode',
+        dest='encode_type',
+        help=encode_help_text
+        # no choices here to allow clean help formatting
+    )
+    group.add_argument(
+        '-d', '--decode',
+        action='store_true',
+        help='Automatically identify and decode/analyse the input string.'
+    )
+    parser.add_argument('text', nargs='?', help='The string to be processed.')
     parser.add_argument('-k', '--key', help='Key for ciphers like Vigenere or Substitution.')
 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
-        
+
     args = parser.parse_args()
 
-    # --- Logic ---
-    if args.decode:
-        auto_identify_and_decode(args.text)
-    elif args.encode_type:
-        # Check for key requirements
-        if args.encode_type in ['vigenere', 'substitution'] and not args.key:
-            print(f"{Fore.RED}[-] Error: The '{args.encode_type}' cipher requires a key. Use the -k or --key argument.")
-            sys.exit(1)
+    if args.encode_type and args.encode_type not in valid_encodings:
+        print(f"{Fore.RED}[-] Error: Invalid encoding or hash type '{args.encode_type}'.\nValid types:\n  " +
+              "\n  ".join(valid_encodings))
+        sys.exit(1)
 
-        # Mapping choices to functions, including short aliases
+    # --- INPUT ---
+    input_text = args.text
+    if not input_text:
+        if not sys.stdin.isatty():
+            input_text = sys.stdin.read().rstrip('\n')
+        else:
+            print(f"{Fore.RED}[-] Error: No input provided. Please specify text argument or pipe input.")
+            sys.exit(1)
+    # --- LOGIC ---
+    if args.decode:
+        auto_identify_and_decode(input_text)
+    elif args.encode_type:
+        if args.encode_type in ['vigenere', 'substitution'] and not args.key:
+            print(f"{Fore.RED}[-] Error: The '{args.encode_type}' cypher requires a key. Use the -k or --key argument.")
+            sys.exit(1)
         actions = {
             'base64': encode_base64, 'b64': encode_base64,
             'base64url': encode_base64_url, 'b64url': encode_base64_url,
@@ -340,9 +367,9 @@ Hashes (SHA-3):
             'sha3-384': hash_sha3_384,
             'sha3-512': hash_sha3_512
         }
-        
-        result = actions[args.encode_type](args.text, args.key)
-        print(f"{Fore.GREEN}[+] Input: {Style.RESET_ALL}{args.text}")
+
+        result = actions[args.encode_type](input_text, args.key)
+        print(f"{Fore.GREEN}[+] Input: {Style.RESET_ALL}{input_text}")
         if args.key:
             print(f"{Fore.GREEN}[+] Key:   {Style.RESET_ALL}{args.key}")
         print(f"{Fore.GREEN}[+] Type:  {Style.RESET_ALL}{args.encode_type.upper()}")
