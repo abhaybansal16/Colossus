@@ -40,8 +40,8 @@ Open a new terminal session after installation for the `colossus` command to be 
 ### Help Menu
 
 ```text
-usage: colossus [-h] (-e | -d) [--base64] [--hex] [--url] [--rot47] [--vigenere] [--substitution] [--caesar] [--md5] [--sha1] [--sha256] [-k KEY] [text]
-
+usage: (for mac) colossus [-h] (-e | -d) [--ENCRYPTION_TYPE] [-k KEY] [text]
+usage: (for linux/wsl) colossus [-h] (-e | -d) [ENCRYPTION_TYPE] [-k KEY] [text]
 Colossus - A Universal Crypto Analyzer Tool.
 
 positional arguments:
@@ -57,16 +57,25 @@ options:
 methods:
   Choose ONE of the following methods:
 
-  --base64              Use Base64 encoding/decoding.
-  --hex                 Use Hex encoding/decoding.
-  --url                 Use URL encoding/decoding.
-  --rot47               Use ROT47 cipher.
-  --vigenere            Use Vigenere cipher (requires --key).
-  --substitution        Use Substitution cipher (requires --key).
-  --caesar              Use Caesar cipher brute-force (decrypt mode only).
-  --md5                 Use MD5 hash (encrypt mode only).
-  --sha1                Use SHA1 hash (encrypt mode only).
-  --sha256              Use SHA256 hash (encrypt mode only).
+ --base64/b64         Use Base64 encoding/decoding.
+--base64url/b64url    Use Base64 URL Safe encoding/decoding.
+--hex                 Use Hex encoding/decoding.
+--url                 Use URL encoding/decoding.
+--rot47               Use ROT47 cipher.
+--vigenere            Use Vigenere cipher (requires --key).
+--substitution        Use Substitution cipher (requires --key).
+--caesar              Use Caesar cipher brute-force (decode only).
+--md5                 Use MD5 hash (encode only).
+--sha1                Use SHA1 hash (encode only).
+--sha224              Use SHA224 hash (encode only).
+--sha256              Use SHA256 hash (encode only).
+--sha384              Use SHA384 hash (encode only).
+--sha512              Use SHA512 hash (encode only).
+--sha3-224            Use SHA3-224 hash (encode only).
+--sha3-256            Use SHA3-256 hash (encode only).
+--sha3-384            Use SHA3-384 hash (encode only).
+--sha3-512            Use SHA3-512 hash (encode only).
+
 
 Example pipeline usage:
   echo "hello world" | colossus -e --base64
@@ -79,14 +88,15 @@ Example pipeline usage:
 ```bash
 $ echo "hello world" | colossus -e --base64
 
- /$$$$$$   /$$$$$$  /$$        /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$
-/$$__  $$ /$$__  $$| $$       /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$
+ /$$$$$$    /$$$$$$  /$$        /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$
+/ $$__ $$  /$$__  $$| $$       /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$
 | $$  \__/| $$  \ $$| $$      | $$  \ $$| $$  \__/| $$  \__/| $$  | $$| $$  \__/
-| $$      | $$  | $$| $$      | $$  | $$|  $$$$$$ |  $$$$$$ | $$  | $$|  $$$$$$ 
+| $$      | $$  | $$| $$      | $$  | $$|  $$$$$$ |  $$$$$$ | $$  | $$|  $$$$$$
 | $$      | $$  | $$| $$      | $$  | $$ \____  $$ \____  $$| $$  | $$ \____  $$
 | $$    $$| $$  | $$| $$      | $$  | $$ /$$  \ $$ /$$  \ $$| $$  | $$ /$$  \ $$
 |  $$$$$$/|  $$$$$$/| $$$$$$$$|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/
- \______/  \______/ |________/ \______/  \______/  \______/  \______/  \______/ 
+ \______/  \______/ |________/ \______/  \______/  \______/  \______/  \______/
+
                 A Universal Crypto Analyzer for Researchers
 
 [+] Mode:  Encrypt/Hash
@@ -98,30 +108,31 @@ $ echo "hello world" | colossus -e --base64
 **Decoding & Analysis**
 
 ```bash
-$ colossus -d "aGVsbG8gd29ybGQ="
+$   colossus -d "w6==@"
 
- /$$$$$$   /$$$$$$  /$$        /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$
-/$$__  $$ /$$__  $$| $$       /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$
+ /$$$$$$    /$$$$$$  /$$        /$$$$$$   /$$$$$$   /$$$$$$  /$$   /$$  /$$$$$$
+/ $$__ $$  /$$__  $$| $$       /$$__  $$ /$$__  $$ /$$__  $$| $$  | $$ /$$__  $$
 | $$  \__/| $$  \ $$| $$      | $$  \ $$| $$  \__/| $$  \__/| $$  | $$| $$  \__/
-| $$      | $$  | $$| $$      | $$  | $$|  $$$$$$ |  $$$$$$ | $$  | $$|  $$$$$$ 
+| $$      | $$  | $$| $$      | $$  | $$|  $$$$$$ |  $$$$$$ | $$  | $$|  $$$$$$
 | $$      | $$  | $$| $$      | $$  | $$ \____  $$ \____  $$| $$  | $$ \____  $$
 | $$    $$| $$  | $$| $$      | $$  | $$ /$$  \ $$ /$$  \ $$| $$  | $$ /$$  \ $$
 |  $$$$$$/|  $$$$$$/| $$$$$$$$|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/|  $$$$$$/
- \______/  \______/ |________/ \______/  \______/  \______/  \______/  \______/ 
+ \______/  \______/ |________/ \______/  \______/  \______/  \______/  \______/
+
 
                 A Universal Crypto Analyzer for Researchers
 
-[*] Starting automatic analysis on: aGVsbG8gd29ybGQ=
+[*] Starting automatic analysis on: w6==@
 
 --- STATISTICAL ANALYSIS ---
-    Shannon Entropy: 3.7381
-    Hint: Medium entropy is common for encodings like Base64.
+    Shannon Entropy: 1.9219
+    Hint: Low entropy suggests plain text or simple encoding (e.g., Hex).
 
 --- ENCODING & HASH ANALYSIS ---
-[+] Found potential matches:
-     Detected as: Base64
-           Result: hello world
-
+[-] No common encoding or hash type identified.
 
 --- CLASSICAL CIPHER ANALYSIS ---
+ Detected as: ROT47
+          Result: Hello
+
 ```
