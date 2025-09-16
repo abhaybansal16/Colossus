@@ -17,15 +17,18 @@ echo "   - Python 3 and pip3 found."
 pip3 install colorama > /dev/null 2>&1
 echo "   - Dependencies installed."
 
-# 2. Make the script executable
+# 2. Rename the file so that it runs on colossus, not colossus.py (For linux systems) 
+mv colossus.py colossus 
+
+# 3. Make the script executable
 echo "   - Making Colossus executable..."
 chmod +x colossus
 
-# 3. Create the destination directory if it doesn't exist (THIS IS THE KEY)
+# 4. Create the destination directory if it doesn't exist (THIS IS THE KEY)
 echo "   - Ensuring /usr/local/bin exists..."
 mkdir -p /usr/local/bin
 
-# 4. Move the script to the directory
+# 5. Move the script to the directory
 echo "   - Installing Colossus to /usr/local/bin/..."
 mv colossus /usr/local/bin/
 
