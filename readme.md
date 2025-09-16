@@ -24,7 +24,7 @@ Clone the repository and run the installer. The script will install dependencies
 ```
 bash
 # Clone the repository
-git clone [https://github.com/abhaybansal16/colossus.git](https://github.com/abhaybansal16/colossus.git)
+git clone https://github.com/abhaybansal16/colossus.git
 
 # Navigate into the directory
 cd colossus
